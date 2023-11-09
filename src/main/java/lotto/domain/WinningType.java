@@ -4,15 +4,21 @@ import java.util.Arrays;
 
 public enum WinningType {
 
-    THREE(3, false, 5_000),
-    FOUR(4, false, 50_000),
-    FIVE(5, false, 1_500_000),
+    THREE(3, 5_000),
+    FOUR(4, 50_000),
+    FIVE(5, 1_500_000),
     FIVE_BONUS(5, true, 30_000_000),
-    SIX(6, false, 2_000_000_000);
+    SIX(6, 2_000_000_000);
 
     private final int matchesNumber;
     private final boolean isBonus;
     private final int reward;
+
+    WinningType(int matchesNumber, int reward) {
+        this.matchesNumber = matchesNumber;
+        this.reward = reward;
+        this.isBonus = false;
+    }
 
     WinningType(int matchesNumber, boolean isBonus, int reward) {
         this.matchesNumber = matchesNumber;

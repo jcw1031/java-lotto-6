@@ -34,7 +34,7 @@ public class OutputView {
                 .forEach(System.out::println);
 
         double returnRate = winningResult.returnRate();
-        System.out.printf("총 수익률은 %.1f%%입니다.", returnRate);
+        System.out.printf("총 수익률은 %,.1f%%입니다.", returnRate);
     }
 
     private static void printLineSeparator() {

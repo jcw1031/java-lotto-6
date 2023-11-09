@@ -13,12 +13,13 @@ import lotto.utils.LottoIssuer;
 import lotto.utils.WinningJudge;
 import lotto.validator.LottoValidator;
 
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LottoService {
 
@@ -84,11 +85,10 @@ public class LottoService {
     }
 
     private static Map<WinningType, Integer> initializeWinningCountMap() {
-        Map<WinningType, Integer> winningCount = new HashMap<>();
-        for (WinningType winningType : WinningType.values()) {
-            winningCount.put(winningType, 0);
-        }
-        return winningCount;
+        return Arrays.stream(WinningType.values())
+                .collect(Collectors.toMap(
+                        winningType -> winningType, winningType -> 0, (prev, next) -> next)
+                );
     }
 
     private void increaseWinningCount(WinningType winningType, Map<WinningType, Integer> winningTypeCount) {

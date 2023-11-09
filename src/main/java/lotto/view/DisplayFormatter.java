@@ -4,8 +4,7 @@ import lotto.domain.WinningType;
 import lotto.dto.LottoNumbers;
 import lotto.dto.WinningStatus;
 
-import java.text.NumberFormat;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class DisplayFormatter {
 
@@ -13,12 +12,11 @@ public class DisplayFormatter {
     }
 
     public static String formatLottoNumbers(LottoNumbers lottoNumbers) {
-        List<Integer> numbers = lottoNumbers.numbers();
-        List<String> sortedNumbers = numbers.stream()
+        return lottoNumbers.numbers()
+                .stream()
                 .sorted()
                 .map(String::valueOf)
-                .toList();
-        return "[" + String.join(", ", sortedNumbers) + "]";
+                .collect(Collectors.joining(", ", "[", "]"));
     }
 
     public static String formatWinningStatus(WinningStatus winningStatus) {
@@ -28,10 +26,7 @@ public class DisplayFormatter {
         boolean isBonus = winningType.isBonus();
         int count = winningStatus.count();
 
-        NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        String formattedReward = numberFormat.format(reward);
-
-        return String.format("%d개 일치%s (%s원) - %d개", matchesCount, bonusMatchMessage(isBonus), formattedReward, count);
+        return String.format("%d개 일치%s (%,d원) - %d개", matchesCount, bonusMatchMessage(isBonus), reward, count);
     }
 
     private static String bonusMatchMessage(boolean isBonus) {
