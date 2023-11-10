@@ -8,6 +8,9 @@ public class WinningLotto {
     private int bonusNumber;
 
     public List<Integer> getNumbers() {
+        if (lotto == null) {
+            throw new IllegalArgumentException("[ERROR] 당첨 로또가 생성되지 않았습니다.");
+        }
         return lotto.getNumbers();
     }
 

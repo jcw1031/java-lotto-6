@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class LottoService {
@@ -86,12 +87,10 @@ public class LottoService {
 
     private static Map<WinningType, Integer> initializeWinningCountMap() {
         return Arrays.stream(WinningType.values())
-                .collect(Collectors.toMap(
-                        winningType -> winningType, winningType -> 0, (prev, next) -> next)
-                );
+                .collect(Collectors.toMap(Function.identity(), winningType -> 0));
     }
 
     private void increaseWinningCount(WinningType winningType, Map<WinningType, Integer> winningTypeCount) {
-        winningTypeCount.put(winningType, winningTypeCount.get(winningType) + 1);
+        winningTypeCount.compute(winningType, (key, value) -> value + 1);
     }
 }

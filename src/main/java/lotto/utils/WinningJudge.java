@@ -16,7 +16,7 @@ public class WinningJudge {
         List<Integer> numbers = lotto.getNumbers();
         int matchesCount = countMatches(numbers, winningLotto);
         return Optional.ofNullable(
-                WinningType.of(matchesCount, isBonusMatch(matchesCount, numbers, winningLotto.getBonusNumber()))
+                WinningType.of(matchesCount, isBonusMatch(numbers, winningLotto.getBonusNumber()))
         );
     }
 
@@ -27,7 +27,7 @@ public class WinningJudge {
                 .count();
     }
 
-    private static boolean isBonusMatch(int matchesCount, List<Integer> numbers, int bonusNumber) {
-        return matchesCount == WinningType.FIVE_BONUS.getMatchesCount() && numbers.contains(bonusNumber);
+    private static boolean isBonusMatch(List<Integer> numbers, int bonusNumber) {
+        return numbers.contains(bonusNumber);
     }
 }
