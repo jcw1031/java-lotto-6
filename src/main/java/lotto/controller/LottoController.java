@@ -1,10 +1,10 @@
 package lotto.controller;
 
 import lotto.domain.Buyer;
-import lotto.service.LottoService;
 import lotto.domain.WinningLotto;
-import lotto.dto.WinningResult;
 import lotto.dto.PurchasedLotto;
+import lotto.dto.WinningResult;
+import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -46,14 +46,12 @@ public class LottoController {
     }
 
     private void repeatExecutionOnFailure(Runnable runnable) {
-        do {
-            try {
-                runnable.run();
-                break;
-            } catch (IllegalArgumentException exception) {
-                exception.printStackTrace(System.out);
-            }
-        } while (true);
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException exception) {
+            exception.printStackTrace(System.out);
+            repeatExecutionOnFailure(runnable);
+        }
     }
 
     private void printWinningStatistics() {
